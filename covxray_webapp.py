@@ -1,0 +1,60 @@
+import os
+from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename
+
+app = Flask(__name__)
+
+import tensorflow
+tensorflow.compat.v1.disable_eager_execution()
+
+from keras.models import load_model, Model
+from tensorflow.compat.v1.keras.backend import set_session
+from tensorflow.compat.v1.keras.backend import get_session
+from tensorflow.python.keras import backend as K
+from tensorflow.compat.v1 import global_variables_initializer
+from skimage.transform import resize
+import matplotlib.pyplot as plt
+import numpy as np
+
+print("Loading model")
+
+global sess
+sess = tensorflow.compat.v1.Session()
+set_session(sess)
+
+global model
+model = load_model("covid_model.h5") 
+
+global graph
+graph = tensorflow.compat.v1.get_default_graph()
+
+@app.route('/', methods = ['GET', 'POST'])
+def main_page():
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('uploads', filename))
+        return redirect(url_for('prediction', filename = filename))
+    return render_template('index.html')
+
+@app.route('/prediction/<filename>')
+def prediction(filename):
+    my_image = plt.imread(os.path.join('uploads', filename))
+    my_image_re = resize(my_image, (224,224,3))
+
+    with graph.as_default():
+        set_session(sess)
+        probabilities = model.predict(np.array([my_image_re,]))[0,:]
+        print(probabilities)
+
+        number_to_class = ['covid', 'no-covid']
+        index = np.argsort(probabilities)
+        predictions = {
+            "class1":number_to_class[index[1]],
+            "class2":number_to_class[index[0]],
+            "prob1":probabilities[index[1]],
+            "prob2":probabilities[index[0]],
+            }
+    return render_template('predict.html', predictions=predictions)
+
+app.run(host='0.0.0.0', port=80)
