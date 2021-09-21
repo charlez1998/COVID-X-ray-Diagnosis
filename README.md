@@ -1,5 +1,5 @@
 ## COVID-19 X-ray Classification: Project Overview
-* Created a tool that classifies whether or not an individual may have COVID based on their posteroanterior (PA) chest view. 
+* Created a tool that classifies whether or not an individual has COVID based on their posteroanterior (PA) chest view. 
 * Model accuracy on the test set ranges from 90 - 95%. 
 * Built a client facing API using flask which will be deployed for the use of hospitals in the Philippines.
 
