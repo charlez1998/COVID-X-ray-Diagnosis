@@ -1,5 +1,5 @@
 ## COVID-19 X-ray Classification: Project Overview
-* Created a tool that classifies whether an individual may/may not have COVID based on their posteroanterior (PA) chest view. 
+* Created a tool that classifies whether or not an individual has COVID based on their posteroanterior (PA) chest view. 
 * Model accuracy on the test set ranges from 90 - 95%. 
 * Built a client facing API using flask which will be deployed for the use of hospitals in the Philippines.
 
@@ -20,9 +20,11 @@
 ## Model Performance
 The convolutional neural network model we will be using is the transfer learning application **VGG16**. It may be a good idea to contrast its performance with other transfer learning approaches such as ResNet50 and NASNetLarge. I will test this is in the future.
 
-Here are some of the results of our VGG16 model:
+The Current Model's accuracy on the test set ranges from 90 - 95% whilst its accuracy on the Providence Hospital's patients have been 73% thus far. 
+
+Here are the ROC/AUC Curves of our VGG16 model:
 
 <img src="performance_visual.png" width="475"/> <img src="rocauc_visual.png" width="475"/> 
 
 ## Deployment/Productionization
-The webapp is currently being hosted here: 206.189.82.204
+The webapp is currently being hosted here: http://206.189.82.204/
