@@ -22,9 +22,13 @@ The convolutional neural network model we will be using is the transfer learning
 
 The Current Model's accuracy on the test set ranges from 90 - 95% whilst its accuracy on the Providence Hospital's patients have been 73% thus far. 
 
-Here are the ROC/AUC Curves of our VGG16 model:
+Here is the model's performance over several epochs:
 
-<img src="performance_visual.png" width="475"/> <img src="rocauc_visual.png" width="475"/> 
+<img src="performance_visual.png" width="475"/> 
+
+Depicted below are the ROC/AUC Curves of our model:
+
+<img src="rocauc_visual.png" width="475"/> 
 
 ## Deployment/Productionization
 The webapp is currently being hosted here: http://206.189.82.204/
